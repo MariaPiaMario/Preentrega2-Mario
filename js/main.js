@@ -1,128 +1,136 @@
 
-let sumaDeArticulos = 0;
-const sandalias = 17000;
-const bolsoGrande = 20000;
-const bolsoMediano = 15000;
-const bolsoPequenio = 12000;
-const alfombraGrande = 22000;
-const alfombraPequenia = 10000;
-const portacelular = 8000;
-let compraEnProceso = true;
-let articulos;
+
+class Producto{
+
+    constructor(nombre, precio){
+            this.nombre = nombre;
+            this.precio = precio;
+            }
+    }
+    
+
+const Productos = [
+    new Producto("Sandalias", 17000),
+    new Producto("Bolso Grande", 20000),
+    new Producto("Bolso Mediano", 15000),
+    new Producto("Bolso Pequeño", 12000),
+    new Producto("Alfombra Grande", 22000),
+    new Producto("Alfombra Pequeña", 10000),
+    new Producto("Portacelular", 8000),
+];
+
+let carrito = [];
+let costoDeEnvio = 0;
+
+// Pedir nombre al usuario nombre y mail
 
 const cliente = prompt("Ingrese su nombre");
 const eMail = prompt("Ingrese su e-mail");
 
-while(compraEnProceso){
-    articulos = prompt("Ingrese un artículo que desee sumar a su carrito. Los precios son los siguientes: Sandalias $17000, Bolso Grande $20000, Bolso Mediano $15000, Bolso Pequeño $12000, Alfombra Grande $22000, Alfombra Pequeña $10000, Portacelular $8000. Cuando haya finalizado su compra escriba Salir"). toLowerCase();
+// Dar la bienvenida y mostrar los productos disponibles para comprar
+let seleccion = prompt("Bienvenid@ " + cliente + " a nuestra tienda online. Desea realizar una compra?. Ingrese SI o NO."). toLowerCase();
 
-class Producto{
-    constructor(tipo, precio){
-    this.tipo = tipo;
-    this.precio = precio;
-    }
+while(seleccion != "si" && seleccion != "no"){
+    alert("Por favor ingrese SI o NO");
+    seleccion = prompt("Bienvenid@ " + cliente + " a nuestra tienda online. Desea realizar una compra?. Ingrese SI o NO.");
 }
 
-const productos = [{
-    
-    const producto1 = new Producto("sandalias", 17000),
-    const producto2 = new Producto("Bolso Grande", 20000),
-    const producto3 = new Producto ("Bolso Mediano", 15000),
-    const producto4 = new Producto("Bolso Pequeño", 12000),
-    const producto5 = new Producto("Alfombra Grande", 22000),
-    const producto6 = new Producto("Alfombra Pequeña", 10000),
-    const producto7 = new Producto("Portacelular", 8000)
-    }
-];
+if(seleccion == "si"){
+    alert("Nuestros productos disponibles son los siguientes : ");
 
+    let listaDeProductos = Productos.map((producto) => producto.nombre + " " + "$" + producto.precio);
 
-switch(articulos){
+    alert(listaDeProductos.join (" / "));
+
+} else if(seleccion == "no"){
+    alert("Gracias por visitar nuestra tienda online. Hasta pronto!");
+}
+
+while(seleccion != "no"){
+    let producto = prompt("Agregá un producto a tu carrito"). toLowerCase();
+    let precio = 0;
+
+if(producto == "sandalias" || producto == "bolso grande" || producto == "bolso mediano" || producto == "bolso pequeño" || producto == "alfombra grande" || producto == "alfombra Ppequeña" || producto == "portacelular"){
+
+    switch(producto){
         case "sandalias":
-            sumaDeArticulos += sandalias;
-            console.log(sumaDeArticulos);
-            break;
+        precio = 17000;
+        break;
 
         case "bolso grande":
-            sumaDeArticulos += bolsoGrande;
-            console.log(sumaDeArticulos);
-            break; 
+        precio = 20000;
+        break;
 
         case "bolso mediano":
-            sumaDeArticulos += bolsoMediano;
-            console.log(sumaDeArticulos);
+            precio = 15000;
             break;
 
         case "bolso pequeño":
-            sumaDeArticulos += bolsoPequenio;
-            console.log(sumaDeArticulos);
-            break; 
+            precio = 12000;
+            break;
 
         case "alfombra grande":
-            sumaDeArticulos += alfombraGrande;
-            console.log(sumaDeArticulos);
-            break;     
+        precio = 22000;
+        break;
 
         case "alfombra pequeña":
-            sumaDeArticulos += alfombraPequenia;
-            console.log(sumaDeArticulos);
-            break;
-
+        precio = 10000;
+        break;   
+        
         case "portacelular":
-            sumaDeArticulos += portacelular;
-            console.log(sumaDeArticulos);
-            break; 
-
-        default:
-            alert("El dato ingresado no corresponde a un artículo a la venta");
-            break;
-
-        case "salir":
-            compraEnProceso = false;
-            break;
-
+        precio = 8000;
+        break;          
     }
+
+let unidades = parseInt(prompt("Ingrese las unidades que desea comprar"));
+
+carrito.push({producto, unidades, precio});
+console.log(carrito);
+
+} else {
+    alert("El producto ingresado no existe");
+}
+seleccion = prompt("Desea seguir comprando? Ingrese SI o NO.");
+
+while(seleccion == "no"){
+    let costoDeEnvio = 0;
+
+    entrega = prompt("Ingrese el método de envío. Para retirar en persona por nuestro Showroom sin costo escriba SHOWROOM. Si el envío es dentro de CABA con costo de $500 escriba CABA, si el envío es hacia la Provincia de Buenos Aires con costo de $1200 escriba PROVINCIA."). toLowerCase();
+    
+    if (entrega == "showroom"){
+        costoDeEnvio += 0;
+        console.log(costoDeEnvio);
+    }
+    else if (entrega == "caba"){
+        costoDeEnvio += 500;
+        console.log(costoDeEnvio);
+    }
+    else if (entrega == "provincia"){
+        costoDeEnvio += 1200;
+        console.log(costoDeEnvio); 
+    }
+    else{
+        alert("Forma de envío elegida incorrecta");
+    }
+    
+    alert("GRACIAS POR TU COMPRA " + cliente + "! En minutos te llegará un e-mail a " + eMail + " con la factura de tu compra y los próximos pasos a seguir.");
+
+carrito.forEach((carritoFinal) => {
+    console.log(`producto: ${carritoFinal.producto}, unidades: ${carritoFinal.unidades}, total a pagar por producto: ${carritoFinal.unidades * carritoFinal.precio}`);
+})
+    break;
 }
 
-let costoDeEnvio = 0;
-
-entrega = prompt("Ingrese el método de envío. Para retirar en persona por nuestro Showroom sin costo escriba SHOWROOM. Si el envío es dentro de CABA con costo de $500 escriba CABA, si el envío es hacia la Provincia de Buenos Aires con costo de $1200 escriba PROVINCIA."). toLowerCase();
-
-if (entrega == "showroom"){
-    costoDeEnvio += 0;
-    console.log(costoDeEnvio);
-}
-else if (entrega == "caba"){
-    costoDeEnvio += 500;
-    console.log(costoDeEnvio);
-}
-else if (entrega == "provincia"){
-    costoDeEnvio += 1200;
-    console.log(costoDeEnvio); 
-}
-else{
-    alert("Forma de envío elegida incorrecta");
 }
 
-let precioConIva = ((sumaDeArticulos + costoDeEnvio) * 1.21)
+const total = carrito.reduce((acc, el) => acc + el.precio * el.unidades, 0);
+console.log(`El total a pagar por su compra es: ${total}`);
 
-alert("La suma del costo de los artículos dentro de su carrito + el costo de envío es: $" + (sumaDeArticulos + costoDeEnvio) + " + IVA. La suma total de su compra incluyendo el IVA es: $" + precioConIva);
-
-alert("GRACIAS POR TU COMPRA " + cliente + "! En minutos te llegará un e-mail a " + eMail + " con la factura de tu compra y los próximos pasos a seguir.");
+let precioConIva = ((total + costoDeEnvio) * 1.21)
+    
+alert("La suma del costo de los artículos dentro de su carrito + el costo de envío es: $" + total + costoDeEnvio + " + IVA. La suma total de su compra incluyendo el IVA es: $" + precioConIva);
 
 console.log("Fin del programa");
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
